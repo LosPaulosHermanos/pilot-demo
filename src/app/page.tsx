@@ -47,14 +47,13 @@ const RISK_DASHBOARD_FILTERS: Filter[] = [
 ];
 
 const UPLOAD_SLIDE_SECTIONS: Section[] = [
-  { id: 0, label: "Évaluation à dire d'expert", description: "Les trois niveaux d'évaluation du risque de Gouvernance — brut, moyens de maîtrise, résiduel — avec indicateurs de couleur et comparaison N-1.", render: "text", fullWidth: true, iconType: "kpi" },
-  { id: 1, label: "Risques N2 associés", description: "Liste de tous les risques de niveau 2 rattachés au risque Gouvernance : structure organisationnelle, défaut d'alignement, politiques internes, partenariats, ESG/RSE, réglementation.", render: "text", iconType: "list" },
-  { id: 2, label: "Évolution du risque brut", description: "Analyse de l'évolution du risque brut avec les facteurs aggravants, accompagnée d'un graphique barres comparant N et N-1.", render: "both", iconType: "chart" },
-  { id: 3, label: "Risque net", description: "Synthèse du risque résiduel après prise en compte des moyens de maîtrise, avec mise en évidence du niveau retenu.", render: "text", iconType: "text" },
-  { id: 4, label: "Moyens de maîtrise", description: "Ventilation des moyens de maîtrise par catégorie (Organisation, Normes, Contrôles, Reporting) avec taux de satisfaction.", render: "chart", iconType: "chart" },
-  { id: 5, label: "Contrôles", description: "Résumé de l'environnement de contrôle : points non-satisfaisants identifiés et conclusions des missions d'audit.", render: "text", iconType: "text" },
-  { id: 6, label: "Plans d'action", description: "Actions prioritaires du plan de contrôle, avec responsables et échéances.", render: "text", iconType: "list" },
-  { id: 7, label: "Matrice par entité", description: "Tableau croisant les entités avec les métriques clés : processus, risques évalués, niveaux brut/net, plans d'action.", render: "text", fullWidth: true, iconType: "table" },
+  { id: 0, label: "Évaluation à dire d'expert", description: "Les trois niveaux d'évaluation du risque Gouvernance : risque brut (Critique, score 18.2), moyens de maîtrise (Moyenne, 55/120 contrôles) et risque résiduel (Élevé, score 12.8). Comparaison avec N-1 et tendances.", render: "text", fullWidth: false, iconType: "kpi" },
+  { id: 1, label: "Risques N2 associés", description: "Liste des 6 risques de niveau 2 rattachés au risque Gouvernance avec leur niveau de criticité : R1.1 Structure organisationnelle (Critique), R1.2 Solvabilité II (Critique), R1.3 Alignement stratégique (Élevé), R1.4 Politiques internes (Élevé), R1.5 Partenariats (Élevé), R1.6 ESG/RSE (Modéré).", render: "text", iconType: "list" },
+  { id: 2, label: "Évolution du risque brut — par direction", description: "Histogramme horizontal du nombre de risques par direction (Souscription 24, Prestations 20, Finance 32, SI 24, Réseau 20), avec comparaison N vs N-1. Met en évidence les directions les plus exposées.", render: "chart", iconType: "chart" },
+  { id: 3, label: "Niveau résiduel — répartition", description: "Barre horizontale empilée de la répartition des 120 risques par niveau résiduel : Critique (30), Élevé (45), Modéré (36), Faible (9). Visualisation de la concentration du risque.", render: "chart", iconType: "chart" },
+  { id: 4, label: "Efficacité des contrôles", description: "Donut chart des 120 contrôles répartis par efficacité : Forte 27 (22%), Moyenne 55 (46%), Faible 38 (32%). Met en lumière les zones où le dispositif de maîtrise est insuffisant.", render: "chart", iconType: "chart" },
+  { id: 5, label: "Plans d'action prioritaires", description: "Tableau des actions prioritaires avec responsable et échéance : refonte comités de pilotage (Dir. Risques, sept. 2025), mise en conformité Solvabilité II (DAF, déc. 2025), audit partenariats (Dir. Partenariats, oct. 2025), cartographie ESG (Secrétariat Gén., mars 2026).", render: "text", iconType: "table" },
+  { id: 6, label: "Matrice par direction — synthèse", description: "Tableau croisé des 5 directions avec : nombre de risques, répartition par niveau (Critique/Élevé/Modéré/Faible), score résiduel moyen et nombre d'incidents sur 12 mois. Finance, Risques & Conformité concentre le plus de risques critiques (10) et le score le plus élevé (16.8).", render: "text", fullWidth: true, iconType: "table" },
 ];
 
 const SECTEURS = ["Assurance", "Banque", "Mutuelle", "Prévoyance", "Institution publique", "Énergie", "Télécom", "Transport", "Santé", "Industrie"];
@@ -778,6 +777,31 @@ export default function Home() {
               <FormField label="Contenu attendu (langage naturel)">
                 <textarea value={editSection.description} onChange={e => updateSection(editSection.id, { description: e.target.value })} rows={5} />
               </FormField>
+            </div>
+
+            {/* Render type selector */}
+            <div style={{ marginTop: 16 }}>
+              <label className="mono-label block mb-2">Type de rendu</label>
+              <div className="flex gap-1.5">
+                {([
+                  { key: "chart" as const, icon: <IconChart className="w-3.5 h-3.5" />, label: "Graphique" },
+                  { key: "text" as const, icon: <IconText className="w-3.5 h-3.5" />, label: "Texte" },
+                  { key: "both" as const, icon: <IconBoth className="w-3.5 h-3.5" />, label: "Mixte" },
+                ]).map(opt => (
+                  <button key={opt.key} onClick={() => updateSection(editSection.id, { render: opt.key })}
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2 transition-all cursor-pointer"
+                    style={{
+                      fontSize: 12, fontWeight: 500, fontFamily: "var(--font-sans)",
+                      border: `1px solid ${editSection.render === opt.key ? "var(--accent)" : "var(--border)"}`,
+                      borderRadius: "var(--radius)",
+                      background: editSection.render === opt.key ? "var(--accent-bg)" : "var(--bg-base)",
+                      color: editSection.render === opt.key ? "var(--accent-text)" : "var(--text-secondary)",
+                      boxShadow: editSection.render === opt.key ? "0 0 0 1px var(--accent)" : "none",
+                    }}>
+                    {opt.icon} {opt.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="mt-5">

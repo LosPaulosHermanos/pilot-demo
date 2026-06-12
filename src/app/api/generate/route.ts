@@ -182,9 +182,14 @@ ${dataContext}`
 
     return Response.json({ content })
   } catch (error) {
-    console.error('Generate API error:', error)
+    const errMsg = error instanceof Error ? error.message : String(error)
+    console.error('Generate API error:', errMsg)
+    const hasKey = !!process.env.ANTHROPIC_API_KEY
+    const hint = hasKey
+      ? `Clé API présente mais erreur : ${errMsg.slice(0, 200)}`
+      : 'ANTHROPIC_API_KEY absente. Ajoutez-la dans les variables d\'environnement Vercel (ou .env.local en dev) puis redéployez.'
     return Response.json(
-      { error: 'Erreur lors de la génération. Vérifiez la clé API.', content: '<p style="color:#C0392B">Erreur de génération. Vérifiez que ANTHROPIC_API_KEY est configurée.</p>' },
+      { error: hint, content: `<p style="color:var(--danger)"><strong>Erreur de génération</strong><br/>${hint}</p>` },
       { status: 500 }
     )
   }
