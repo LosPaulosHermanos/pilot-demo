@@ -275,11 +275,16 @@ export default function Home() {
           canvasName,
         }),
       });
-      if (!res.ok) throw new Error("API error");
       const data = await res.json();
+      if (!res.ok) {
+        updateSection(sectionId, { generatedContent: data.content || `<p style='color:var(--danger)'>${data.error || 'Erreur inconnue'}</p>` });
+        setGeneratingSectionId(null);
+        return;
+      }
       updateSection(sectionId, { generatedContent: data.content });
-    } catch {
-      updateSection(sectionId, { generatedContent: "<p style='color:var(--danger)'>Erreur de génération. Vérifiez la clé API.</p>" });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Erreur réseau';
+      updateSection(sectionId, { generatedContent: `<p style='color:var(--danger)'>Erreur : ${msg}</p>` });
     }
     setGeneratingSectionId(null);
   }, [sections, canvasName, updateSection]);
