@@ -365,20 +365,20 @@ export default function Home() {
       </aside>
 
       {/* ─── MAIN ─── */}
-      <main className="flex-1 min-h-screen" style={{ marginLeft: 220, padding: "32px 48px 100px" }}>
+      <main className="flex-1 min-h-screen" style={{ marginLeft: 220, padding: "32px 48px 120px", maxWidth: 1120 }}>
 
         {/* ═══ VIEW: CREATE ═══ */}
         {view === "create" && (
           <div className="animate-fade-up">
             <div className="mb-8">
-              <h1 style={{ fontSize: 26, fontWeight: 500, marginBottom: 8 }}>Créer un canvas</h1>
+              <h1 style={{ fontSize: 26, fontWeight: 500, marginBottom: 10 }}>Créer un canvas</h1>
               <p style={{ color: "var(--text-secondary)", fontSize: 14, lineHeight: 1.6, maxWidth: 640 }}>
                 Un canvas est un modèle réutilisable de rapport. Il contient des sections positionnées et des filtres de contexte. Choisissez comment le créer.
               </p>
             </div>
 
             {/* Mode cards */}
-            <div className="grid gap-4 mb-8" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+            <div className="grid mb-8" style={{ gridTemplateColumns: "repeat(3, 1fr)", maxWidth: 900, gap: 16 }}>
               {([
                 { key: "upload" as CreateMode, icon: <IconUpload className="w-9 h-9" />, title: "Depuis un modèle", desc: "Uploadez un PDF, slide ou image existant. Pilot analyse la structure visuelle et crée le canvas automatiquement." },
                 { key: "manual" as CreateMode, icon: <IconGrid className="w-9 h-9" />, title: "Manuel", desc: "Construisez votre canvas section par section en mode éditeur. Chaque section peut être générée individuellement par l'IA." },
@@ -388,7 +388,7 @@ export default function Home() {
                   className="text-center transition-all duration-200 cursor-pointer"
                   style={{
                     background: "var(--bg-elevated)", border: `1px solid ${createMode === m.key ? "var(--accent)" : "var(--border)"}`,
-                    borderRadius: "var(--radius)", padding: "32px 24px",
+                    borderRadius: "var(--radius)", padding: "28px 24px",
                     boxShadow: createMode === m.key ? "0 0 0 1px var(--accent), var(--shadow-md)" : "var(--shadow-sm)",
                   }}>
                   <div className="mx-auto mb-3" style={{ width: 48, height: 48, borderRadius: "var(--radius)", display: "flex", alignItems: "center", justifyContent: "center", background: createMode === m.key ? "var(--accent-bg)" : "rgba(28,28,26,0.04)", color: createMode === m.key ? "var(--accent-text)" : "var(--text-tertiary)" }}>{m.icon}</div>
@@ -400,7 +400,7 @@ export default function Home() {
 
             {/* ─── MODE: Upload ─── */}
             {createMode === "upload" && !isAnalyzing && (
-              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: 32, boxShadow: "var(--shadow-sm)" }}>
+              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: 32, boxShadow: "var(--shadow-sm)", maxWidth: 900 }}>
                 <div className="mono-label mb-3" style={{ color: "var(--accent-text)" }}>Modèle disponible</div>
                 <p style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 16, maxWidth: 600 }}>
                   Cliquez sur la slide ci-dessous pour l&apos;importer. Pilot analysera sa structure visuelle et créera automatiquement un canvas avec les sections détectées.
@@ -408,7 +408,7 @@ export default function Home() {
                 {/* Fake slide preview */}
                 <div
                   onClick={simulateUpload}
-                  style={{ cursor: "pointer", borderRadius: "var(--radius)", overflow: "hidden", border: "1px solid var(--border)", boxShadow: "var(--shadow-md)", transition: "box-shadow 0.2s, transform 0.2s", maxWidth: 820, marginInline: "auto" }}
+                  style={{ cursor: "pointer", borderRadius: "var(--radius)", overflow: "hidden", border: "1px solid var(--border)", boxShadow: "var(--shadow-md)", transition: "box-shadow 0.2s, transform 0.2s", maxWidth: 700, marginInline: "auto" }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = "var(--shadow-lg)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
                   onMouseLeave={e => { e.currentTarget.style.boxShadow = "var(--shadow-md)"; e.currentTarget.style.transform = "translateY(0)"; }}
                 >
@@ -431,7 +431,7 @@ export default function Home() {
                 {/* Show faded slide behind spinner */}
                 <div style={{ position: "relative" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/template-sab-gouvernance.svg" alt="" style={{ width: "100%", display: "block", opacity: 0.15, maxWidth: 820, marginInline: "auto" }} />
+                  <img src="/template-sab-gouvernance.svg" alt="" style={{ width: "100%", display: "block", opacity: 0.15, maxWidth: 700, marginInline: "auto" }} />
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <div className="spinner mb-5" />
                     <h3 style={{ fontSize: 17, fontWeight: 500, marginBottom: 6 }}>Pilot analyse votre document</h3>
@@ -443,7 +443,7 @@ export default function Home() {
 
             {/* ─── MODE: Manual ─── */}
             {createMode === "manual" && (
-              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: 32, boxShadow: "var(--shadow-sm)" }}>
+              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: 36, boxShadow: "var(--shadow-sm)" }}>
                 <div className="text-center">
                   <IconGrid className="w-9 h-9 mx-auto mb-3" style={{ color: "var(--text-tertiary)" }} />
                   <h3 style={{ fontSize: 16, fontWeight: 500, marginBottom: 6 }}>Éditeur de canvas</h3>
@@ -452,7 +452,7 @@ export default function Home() {
                     Chaque section peut être générée par l&apos;IA à partir de sa description.
                   </p>
                 </div>
-                <div className="max-w-[400px] mx-auto mb-6">
+                <div className="mx-auto mb-6" style={{ maxWidth: 360 }}>
                   <label className="mono-label block mb-1.5">Nom du canvas</label>
                   <input value={manualName} onChange={e => setManualName(e.target.value)}
                     placeholder="Ex : Dashboard KPI mensuel"
@@ -478,8 +478,8 @@ export default function Home() {
                       setFilters([{ id: "period", label: "Période", placeholder: "Ex : 2025" }, { id: "scope", label: "Périmètre", placeholder: "Ex : Global" }]);
                       navToView("canvas");
                     }}
-                      className="w-full flex items-start gap-2.5 p-2.5 mb-2 text-left transition-all"
-                      style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", background: "var(--bg-elevated)", cursor: "pointer" }}>
+                      className="w-full flex items-start gap-2.5 text-left transition-all"
+                      style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", background: "var(--bg-elevated)", cursor: "pointer", padding: "12px 16px", marginBottom: 8 }}>
                       <div className="w-7 h-7 flex items-center justify-center shrink-0" style={{ borderRadius: "var(--radius)", background: `color-mix(in srgb, ${ex.color} 8%, transparent)` }}>
                         <IconChart className="w-3.5 h-3.5" style={{ color: ex.color }} />
                       </div>
@@ -604,7 +604,7 @@ export default function Home() {
         {view === "canvas" && (
           <div className="animate-fade-up">
             {/* Header */}
-            <div className="flex items-center justify-between mb-3 flex-wrap gap-3">
+            <div className="flex items-center justify-between flex-wrap gap-3" style={{ marginBottom: 16 }}>
               <div>
                 <h2 style={{ fontSize: 20, fontWeight: 500 }}>{canvasName}</h2>
                 <div className="mono-label mt-0.5">CANVAS · {sections.length} SECTIONS · {canvasOrigin}</div>
@@ -616,7 +616,7 @@ export default function Home() {
             </div>
 
             {/* Pilot bar */}
-            <div className="flex items-start gap-3 mb-3.5" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderLeft: "3px solid var(--accent)", borderRadius: "var(--radius)", padding: "12px 16px", boxShadow: "var(--shadow-sm)" }}>
+            <div className="flex items-start mb-3.5" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderLeft: "3px solid var(--accent)", borderRadius: "var(--radius)", padding: "14px 20px", boxShadow: "var(--shadow-sm)", gap: 12 }}>
               <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: "var(--accent-bg)", color: "var(--accent-text)", fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 500 }}>P</div>
               <div>
                 <div className="mono-label mb-0.5" style={{ color: "var(--accent-text)" }}>Pilot</div>
@@ -629,15 +629,15 @@ export default function Home() {
 
             {/* Filters */}
             <div style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", marginBottom: 14, boxShadow: "var(--shadow-sm)", overflow: "hidden" }}>
-              <div className="flex items-center justify-between" style={{ padding: "12px 16px", borderBottom: "1px solid var(--border)" }}>
+              <div className="flex items-center justify-between" style={{ padding: "14px 20px", borderBottom: "1px solid var(--border)" }}>
                 <h3 className="flex items-center gap-2" style={{ fontSize: 14, fontWeight: 500 }}>
                   <IconFilter className="w-[15px] h-[15px]" style={{ color: "var(--text-tertiary)" }} />
                   Filtres de contexte
                 </h3>
                 <span className="mono-label">{filters.length} filtre{filters.length > 1 ? "s" : ""}</span>
               </div>
-              <div style={{ padding: "14px 16px" }}>
-                <div className="flex flex-wrap gap-2 mb-3">
+              <div style={{ padding: "16px 20px" }}>
+                <div className="flex flex-wrap mb-3" style={{ gap: 8 }}>
                   {filters.map(f => (
                     <div key={f.id} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs"
                       style={{ border: "1px solid var(--border)", background: "var(--bg-elevated)", color: "var(--text-secondary)" }}>
@@ -648,7 +648,7 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2" style={{ marginTop: 12 }}>
                   <input value={newFilterLabel} onChange={e => setNewFilterLabel(e.target.value)}
                     onKeyDown={e => e.key === "Enter" && addFilter()}
                     placeholder="Ajouter un filtre… Ex : Période, Périmètre, Secteur"
@@ -662,7 +662,7 @@ export default function Home() {
             </div>
 
             {/* Canvas grid */}
-            <div className="grid gap-3" style={{ gridTemplateColumns: "1fr 1fr" }}>
+            <div className="grid" style={{ gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               {sections.map(s => {
                 const Icon = ICON_MAP[s.iconType] || IconText;
                 return (
@@ -674,7 +674,7 @@ export default function Home() {
                       boxShadow: selectedSection === s.id ? "0 0 0 1px var(--accent), var(--shadow-md)" : "var(--shadow-sm)",
                       gridColumn: s.fullWidth ? "1 / -1" : undefined,
                     }}>
-                    <div className="flex items-center gap-2" style={{ padding: "8px 12px", borderBottom: "1px solid var(--border)" }}>
+                    <div className="flex items-center gap-2" style={{ padding: "10px 16px", borderBottom: "1px solid var(--border)" }}>
                       <div className="flex items-center gap-1.5">
                         <div className="w-5 h-5 flex items-center justify-center" style={{ borderRadius: "var(--radius)", background: "rgba(28,28,26,0.06)" }}>
                           <Icon className="w-[11px] h-[11px]" />
@@ -696,7 +696,7 @@ export default function Home() {
                         ))}
                       </div>
                     </div>
-                    <div style={{ padding: "10px 14px" }}>
+                    <div style={{ padding: "14px 18px" }}>
                       <p style={{ fontSize: 12.5, color: "var(--text-secondary)", lineHeight: 1.6 }}>{s.description}</p>
                       {s.generatedContent && (
                         <div className="gen-content mt-3 pt-3" style={{ borderTop: "1px solid var(--border)" }}
@@ -715,9 +715,9 @@ export default function Home() {
             </div>
 
             {/* Add section */}
-            <div className="text-center mt-3">
+            <div className="text-center" style={{ marginTop: 16 }}>
               <button onClick={addSection} className="inline-flex items-center gap-1.5 text-xs"
-                style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: "9px 20px", fontWeight: 500, cursor: "pointer", fontFamily: "var(--font-sans)" }}>
+                style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: "10px 24px", fontWeight: 500, cursor: "pointer", fontFamily: "var(--font-sans)" }}>
                 <IconPlus className="w-[13px] h-[13px]" /> Ajouter une section
               </button>
             </div>
@@ -751,7 +751,7 @@ export default function Home() {
                   </div>
                 </div>
               ) : (
-                <div className="gen-content" style={{ padding: "28px 36px" }}
+                <div className="gen-content" style={{ padding: "32px 40px" }}
                   dangerouslySetInnerHTML={{ __html: reportContent }} />
               )}
             </div>
@@ -762,19 +762,19 @@ export default function Home() {
       {/* ─── EDIT PANEL (slide-in) ─── */}
       {editSection && view === "canvas" && (
         <div className="fixed top-0 right-0 bottom-0 z-50 flex flex-col animate-fade-up"
-          style={{ width: 380, background: "var(--bg-elevated)", borderLeft: "1px solid var(--border)", boxShadow: "var(--shadow-lg)" }}>
-          <div className="flex items-center justify-between" style={{ padding: "16px 20px", borderBottom: "1px solid var(--border)" }}>
+          style={{ width: 400, background: "var(--bg-elevated)", borderLeft: "1px solid var(--border)", boxShadow: "var(--shadow-lg)" }}>
+          <div className="flex items-center justify-between" style={{ padding: "20px 24px", borderBottom: "1px solid var(--border)" }}>
             <h3 style={{ fontSize: 15, fontWeight: 500 }}>Modifier la section</h3>
             <button onClick={() => setSelectedSection(null)} className="flex items-center justify-center w-8 h-8 cursor-pointer"
               style={{ background: "transparent", border: "1px solid var(--border)", borderRadius: "var(--radius)", color: "var(--text-secondary)" }}>
               <IconClose className="w-4 h-4" />
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto" style={{ padding: 20 }}>
+          <div className="flex-1 overflow-y-auto" style={{ padding: 24 }}>
             <FormField label="Titre de la section">
               <input value={editSection.label} onChange={e => updateSection(editSection.id, { label: e.target.value })} />
             </FormField>
-            <div className="mt-3">
+            <div style={{ marginTop: 16 }}>
               <FormField label="Contenu attendu (langage naturel)">
                 <textarea value={editSection.description} onChange={e => updateSection(editSection.id, { description: e.target.value })} rows={5} />
               </FormField>
@@ -812,7 +812,7 @@ export default function Home() {
       {/* ─── GENERATE BAR (fixed bottom) ─── */}
       {view === "canvas" && sections.length > 0 && (
         <div className="fixed bottom-0 right-0 z-40 flex items-center gap-3.5"
-          style={{ left: 220, background: "var(--bg-elevated)", borderTop: "1px solid var(--border)", padding: "14px 48px", boxShadow: "0 -4px 16px rgba(28,28,26,0.06)" }}>
+          style={{ left: 220, background: "var(--bg-elevated)", borderTop: "1px solid var(--border)", padding: "16px 48px", boxShadow: "0 -4px 16px rgba(28,28,26,0.06)", maxWidth: 1120 }}>
           <div className="flex items-center gap-2 flex-1 flex-wrap">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ fontFamily: "var(--font-mono)", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.06em", background: "var(--accent-bg)", border: "1px solid var(--border-accent)", color: "var(--accent-text)" }}>
               <IconGrid className="w-[11px] h-[11px]" /> {canvasName}
@@ -834,8 +834,8 @@ export default function Home() {
       {showFilterModal && (
         <div className="fixed inset-0 z-[500] flex items-center justify-center" style={{ background: "rgba(28,28,26,0.35)" }}
           onClick={e => { if (e.target === e.currentTarget) setShowFilterModal(false); }}>
-          <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", borderRadius: "var(--radius)", boxShadow: "var(--shadow-lg)", width: 480, maxWidth: "90vw", maxHeight: "80vh", overflowY: "auto" }}>
-            <div className="flex items-start justify-between" style={{ padding: "20px 24px 0" }}>
+          <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", borderRadius: "var(--radius)", boxShadow: "var(--shadow-lg)", width: 520, maxWidth: "90vw", maxHeight: "80vh", overflowY: "auto" }}>
+            <div className="flex items-start justify-between" style={{ padding: "24px 28px 0" }}>
               <div>
                 <h3 style={{ fontSize: 17, fontWeight: 500 }}>Renseignez les filtres de contexte</h3>
                 <p style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 4 }}>Ces valeurs contextualiseront le contenu généré dans chaque section du rapport.</p>
@@ -845,7 +845,7 @@ export default function Home() {
                 <IconClose className="w-4 h-4" />
               </button>
             </div>
-            <div className="flex flex-col gap-3.5" style={{ padding: "16px 24px 20px" }}>
+            <div className="flex flex-col" style={{ padding: "16px 28px 20px", gap: 16 }}>
               {filters.map(f => (
                 <FormField key={f.id} label={f.label}>
                   <input value={filterValues[f.id] || ""} onChange={e => setFilterValues(prev => ({ ...prev, [f.id]: e.target.value }))}
@@ -853,13 +853,13 @@ export default function Home() {
                 </FormField>
               ))}
             </div>
-            <div style={{ padding: "0 24px 14px" }}>
+            <div style={{ padding: "0 28px 14px" }}>
               <div className="mono-label mb-1.5">Nom du rapport généré</div>
               <div className="px-3 py-2" style={{ background: "var(--bg-base)", border: "1px solid var(--border)", borderRadius: "var(--radius)", fontSize: 14, fontWeight: 500, color: Object.values(filterValues).some(Boolean) ? "var(--text-primary)" : "var(--text-tertiary)" }}>
                 {computeReportName()}
               </div>
             </div>
-            <div className="flex justify-end gap-2" style={{ padding: "14px 24px 20px" }}>
+            <div className="flex justify-end gap-2" style={{ padding: "14px 28px 24px" }}>
               <button onClick={() => setShowFilterModal(false)}
                 style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: "9px 20px", fontSize: 13, fontWeight: 500, cursor: "pointer", fontFamily: "var(--font-sans)" }}>
                 Annuler
