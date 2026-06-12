@@ -373,8 +373,8 @@ export default function Home() {
   return (
     <div className="flex min-h-screen">
       {/* ─── SIDEBAR ─── */}
-      <aside className="w-[220px] min-h-screen fixed top-0 left-0 bottom-0 z-50 flex flex-col overflow-y-auto"
-        style={{ background: "var(--bg-elevated)", borderRight: "1px solid var(--border)", padding: "20px 14px" }}>
+      <aside className="fixed top-0 left-0 bottom-0 z-50 flex flex-col overflow-y-auto"
+        style={{ width: 220, background: "var(--bg-elevated)", borderRight: "1px solid var(--border)", padding: "20px 14px" }}>
         <div className="mb-7 px-2" style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase" }}>
           Lite<span style={{ color: "var(--accent)" }}>●</span>Ops
         </div>
@@ -400,35 +400,35 @@ export default function Home() {
       </aside>
 
       {/* ─── MAIN ─── */}
-      <main className="ml-[220px] flex-1 min-h-screen" style={{ padding: "24px 36px 100px", maxWidth: 1400 }}>
+      <main className="flex-1 min-h-screen" style={{ marginLeft: 220, padding: "32px 48px 100px" }}>
 
         {/* ═══ VIEW: CREATE ═══ */}
         {view === "create" && (
           <div className="animate-fade-up">
-            <div className="mb-6">
-              <h1 style={{ fontSize: 24, fontWeight: 500, marginBottom: 6 }}>Créer un canvas</h1>
-              <p style={{ color: "var(--text-secondary)", fontSize: 14, maxWidth: 680 }}>
+            <div className="mb-8">
+              <h1 style={{ fontSize: 26, fontWeight: 500, marginBottom: 8 }}>Créer un canvas</h1>
+              <p style={{ color: "var(--text-secondary)", fontSize: 14, lineHeight: 1.6, maxWidth: 640 }}>
                 Un canvas est un modèle réutilisable de rapport. Il contient des sections positionnées et des filtres de contexte. Choisissez comment le créer.
               </p>
             </div>
 
             {/* Mode cards */}
-            <div className="grid grid-cols-3 gap-3.5 mb-6">
+            <div className="grid gap-4 mb-8" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
               {([
-                { key: "upload" as CreateMode, icon: <IconUpload className="w-8 h-8" />, title: "Depuis un modèle", desc: "Uploadez un PDF, slide ou image. Pilot détecte la structure et crée le canvas automatiquement." },
-                { key: "manual" as CreateMode, icon: <IconGrid className="w-8 h-8" />, title: "Manuel", desc: "Construisez votre canvas section par section. Chaque section peut être générée par l'IA." },
-                { key: "assistant" as CreateMode, icon: <IconChat className="w-8 h-8" />, title: "Via assistant", desc: "Décrivez votre besoin. Pilot génère la structure du canvas pour vous." },
+                { key: "upload" as CreateMode, icon: <IconUpload className="w-9 h-9" />, title: "Depuis un modèle", desc: "Uploadez un PDF, slide ou image existant. Pilot analyse la structure visuelle et crée le canvas automatiquement." },
+                { key: "manual" as CreateMode, icon: <IconGrid className="w-9 h-9" />, title: "Manuel", desc: "Construisez votre canvas section par section en mode éditeur. Chaque section peut être générée individuellement par l'IA." },
+                { key: "assistant" as CreateMode, icon: <IconChat className="w-9 h-9" />, title: "Via assistant", desc: "Décrivez votre besoin en langage naturel ou remplissez un questionnaire. Pilot génère la structure du canvas pour vous." },
               ]).map(m => (
                 <button key={m.key} onClick={() => setCreateMode(m.key)}
                   className="text-center transition-all duration-200 cursor-pointer"
                   style={{
                     background: "var(--bg-elevated)", border: `1px solid ${createMode === m.key ? "var(--accent)" : "var(--border)"}`,
-                    borderRadius: "var(--radius)", padding: "24px 20px",
+                    borderRadius: "var(--radius)", padding: "32px 24px",
                     boxShadow: createMode === m.key ? "0 0 0 1px var(--accent), var(--shadow-md)" : "var(--shadow-sm)",
                   }}>
-                  <div style={{ color: createMode === m.key ? "var(--accent-text)" : "var(--text-tertiary)" }}>{m.icon}</div>
-                  <h3 style={{ fontSize: 14, fontWeight: 500, marginTop: 10, marginBottom: 4 }}>{m.title}</h3>
-                  <p style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.5 }}>{m.desc}</p>
+                  <div className="mx-auto mb-3" style={{ width: 48, height: 48, borderRadius: "var(--radius)", display: "flex", alignItems: "center", justifyContent: "center", background: createMode === m.key ? "var(--accent-bg)" : "rgba(28,28,26,0.04)", color: createMode === m.key ? "var(--accent-text)" : "var(--text-tertiary)" }}>{m.icon}</div>
+                  <h3 style={{ fontSize: 15, fontWeight: 500, marginBottom: 6 }}>{m.title}</h3>
+                  <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.6 }}>{m.desc}</p>
                 </button>
               ))}
             </div>
@@ -781,8 +781,8 @@ export default function Home() {
 
       {/* ─── EDIT PANEL (slide-in) ─── */}
       {editSection && view === "canvas" && (
-        <div className="fixed top-0 right-0 bottom-0 w-[380px] z-50 flex flex-col animate-fade-up"
-          style={{ background: "var(--bg-elevated)", borderLeft: "1px solid var(--border)", boxShadow: "var(--shadow-lg)" }}>
+        <div className="fixed top-0 right-0 bottom-0 z-50 flex flex-col animate-fade-up"
+          style={{ width: 380, background: "var(--bg-elevated)", borderLeft: "1px solid var(--border)", boxShadow: "var(--shadow-lg)" }}>
           <div className="flex items-center justify-between" style={{ padding: "16px 20px", borderBottom: "1px solid var(--border)" }}>
             <h3 style={{ fontSize: 15, fontWeight: 500 }}>Modifier la section</h3>
             <button onClick={() => setSelectedSection(null)} className="flex items-center justify-center w-8 h-8 cursor-pointer"
@@ -831,8 +831,8 @@ export default function Home() {
 
       {/* ─── GENERATE BAR (fixed bottom) ─── */}
       {view === "canvas" && sections.length > 0 && (
-        <div className="fixed bottom-0 left-[220px] right-0 z-40 flex items-center gap-3.5"
-          style={{ background: "var(--bg-elevated)", borderTop: "1px solid var(--border)", padding: "14px 36px", boxShadow: "0 -4px 16px rgba(28,28,26,0.06)" }}>
+        <div className="fixed bottom-0 right-0 z-40 flex items-center gap-3.5"
+          style={{ left: 220, background: "var(--bg-elevated)", borderTop: "1px solid var(--border)", padding: "14px 48px", boxShadow: "0 -4px 16px rgba(28,28,26,0.06)" }}>
           <div className="flex items-center gap-2 flex-1 flex-wrap">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ fontFamily: "var(--font-mono)", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.06em", background: "var(--accent-bg)", border: "1px solid var(--border-accent)", color: "var(--accent-text)" }}>
               <IconGrid className="w-[11px] h-[11px]" /> {canvasName}
