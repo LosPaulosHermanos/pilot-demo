@@ -399,7 +399,7 @@ export default function Home() {
 
             {/* ─── MODE: Upload ─── */}
             {createMode === "upload" && !isAnalyzing && (
-              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: 32, boxShadow: "var(--shadow-sm)", maxWidth: 900 }}>
+              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: "36px 40px", boxShadow: "var(--shadow-sm)", maxWidth: 900, marginTop: 8 }}>
                 <div className="mono-label mb-3" style={{ color: "var(--accent-text)" }}>Modèle disponible</div>
                 <p style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 16, maxWidth: 600 }}>
                   Cliquez sur la slide ci-dessous pour l&apos;importer. Pilot analysera sa structure visuelle et créera automatiquement un canvas avec les sections détectées.
@@ -426,7 +426,7 @@ export default function Home() {
               </div>
             )}
             {createMode === "upload" && isAnalyzing && (
-              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", borderRadius: "var(--radius)", border: "1px solid var(--border)", overflow: "hidden" }}>
+              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", borderRadius: "var(--radius)", border: "1px solid var(--border)", overflow: "hidden", marginTop: 8 }}>
                 {/* Show faded slide behind spinner */}
                 <div style={{ position: "relative" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -442,26 +442,26 @@ export default function Home() {
 
             {/* ─── MODE: Manual ─── */}
             {createMode === "manual" && (
-              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: 36, boxShadow: "var(--shadow-sm)" }}>
+              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: "44px 48px", boxShadow: "var(--shadow-sm)", maxWidth: 680, marginInline: "auto", marginTop: 8 }}>
                 <div className="text-center">
-                  <IconGrid className="w-9 h-9 mx-auto mb-3" style={{ color: "var(--text-tertiary)" }} />
-                  <h3 style={{ fontSize: 16, fontWeight: 500, marginBottom: 6 }}>Éditeur de canvas</h3>
-                  <p style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 20, maxWidth: 460, marginInline: "auto" }}>
+                  <IconGrid className="w-9 h-9 mx-auto mb-4" style={{ color: "var(--text-tertiary)" }} />
+                  <h3 style={{ fontSize: 17, fontWeight: 500, marginBottom: 8 }}>Éditeur de canvas</h3>
+                  <p style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 28, maxWidth: 460, marginInline: "auto", lineHeight: 1.6 }}>
                     Donnez un titre à votre canvas, puis ajoutez des sections une par une.
                     Chaque section peut être générée par l&apos;IA à partir de sa description.
                   </p>
                 </div>
-                <div className="mx-auto mb-6" style={{ maxWidth: 360 }}>
-                  <label className="mono-label block mb-1.5">Nom du canvas</label>
+                <div className="mx-auto mb-8" style={{ maxWidth: 400 }}>
+                  <label className="mono-label block mb-2">Nom du canvas</label>
                   <input value={manualName} onChange={e => setManualName(e.target.value)}
                     placeholder="Ex : Dashboard KPI mensuel"
                     className="w-full text-center"
-                    style={{ background: "var(--bg-base)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: "8px 12px", fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--text-primary)", outline: "none" }} />
+                    style={{ background: "var(--bg-base)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: "10px 16px", fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--text-primary)", outline: "none" }} />
                 </div>
 
                 {/* Examples */}
-                <div style={{ background: "var(--bg-base)", borderRadius: "var(--radius)", padding: "16px 20px", maxWidth: 560, marginInline: "auto", marginBottom: 24 }}>
-                  <div className="mono-label mb-2.5">Exemples de canvas</div>
+                <div style={{ background: "var(--bg-base)", borderRadius: "var(--radius)", padding: "20px 24px", maxWidth: 560, marginInline: "auto", marginBottom: 28 }}>
+                  <div className="mono-label mb-3">Exemples de canvas</div>
                   {[
                     { name: "Rapport COMEX mensuel", secs: ["Synthèse exécutive", "KPIs stratégiques", "Alertes et décisions", "Budget vs réalisé"], color: "var(--color-amber)" },
                     { name: "Fiche risque opérationnel", secs: ["Évaluation du risque", "Cartographie par entité", "Plans d'action", "Historique incidents"], color: "var(--success)" },
@@ -477,8 +477,8 @@ export default function Home() {
                       setFilters([{ id: "period", label: "Période", placeholder: "Ex : 2025" }, { id: "scope", label: "Périmètre", placeholder: "Ex : Global" }]);
                       navToView("canvas");
                     }}
-                      className="w-full flex items-start gap-2.5 text-left transition-all"
-                      style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", background: "var(--bg-elevated)", cursor: "pointer", padding: "12px 16px", marginBottom: 8 }}>
+                      className="w-full flex items-start gap-3 text-left transition-all"
+                      style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", background: "var(--bg-elevated)", cursor: "pointer", padding: "14px 18px", marginBottom: 10 }}>
                       <div className="w-7 h-7 flex items-center justify-center shrink-0" style={{ borderRadius: "var(--radius)", background: `color-mix(in srgb, ${ex.color} 8%, transparent)` }}>
                         <IconChart className="w-3.5 h-3.5" style={{ color: ex.color }} />
                       </div>
@@ -501,16 +501,16 @@ export default function Home() {
 
             {/* ─── MODE: Assistant ─── */}
             {createMode === "assistant" && !isAssistantGenerating && (
-              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", boxShadow: "var(--shadow-sm)", overflow: "hidden" }}>
+              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", boxShadow: "var(--shadow-sm)", overflow: "hidden", marginTop: 8 }}>
                 {/* Toggle */}
-                <div className="flex items-center gap-1 p-4" style={{ borderBottom: "1px solid var(--border)" }}>
-                  <div className="inline-flex p-0.5 gap-0.5" style={{ background: "var(--bg-surface)", borderRadius: "var(--radius)" }}>
+                <div className="flex items-center" style={{ padding: "16px 24px", borderBottom: "1px solid var(--border)", gap: 12 }}>
+                  <div className="inline-flex gap-1" style={{ background: "var(--bg-surface)", borderRadius: "var(--radius)", padding: 3 }}>
                     {(["form", "free"] as AssistantMode[]).map(m => (
                       <button key={m} onClick={() => setAsstMode(m)}
-                        className="flex items-center gap-1.5 px-4 py-1.5 transition-all"
+                        className="flex items-center gap-1.5 transition-all"
                         style={{
-                          fontSize: 12, fontWeight: 500, border: "none", cursor: "pointer", fontFamily: "var(--font-sans)",
-                          borderRadius: "var(--radius)",
+                          fontSize: 13, fontWeight: 500, border: "none", cursor: "pointer", fontFamily: "var(--font-sans)",
+                          borderRadius: "var(--radius)", padding: "8px 16px",
                           background: asstMode === m ? "var(--bg-elevated)" : "transparent",
                           color: asstMode === m ? "var(--text-primary)" : "var(--text-tertiary)",
                           boxShadow: asstMode === m ? "var(--shadow-sm)" : "none",
@@ -522,23 +522,17 @@ export default function Home() {
 
                   {/* Pre-built dashboard shortcut */}
                   <button onClick={loadRiskDashboard}
-                    className="ml-auto flex items-center gap-1.5 px-3 py-1.5 transition-all"
-                    style={{ fontSize: 11, border: "1px solid var(--border-accent)", borderRadius: "var(--radius)", background: "var(--accent-bg)", color: "var(--accent-text)", cursor: "pointer", fontFamily: "var(--font-mono)", letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 500 }}>
+                    className="ml-auto flex items-center gap-1.5 transition-all"
+                    style={{ fontSize: 11, border: "1px solid var(--border-accent)", borderRadius: "var(--radius)", background: "var(--accent-bg)", color: "var(--accent-text)", cursor: "pointer", fontFamily: "var(--font-mono)", letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 500, padding: "8px 14px" }}>
                     <IconBolt className="w-3 h-3" /> Dashboard risques SAB
                   </button>
                 </div>
 
                 {/* Form mode */}
                 {asstMode === "form" && (
-                  <div className="p-5 flex flex-col gap-3.5">
+                  <div className="flex flex-col" style={{ padding: "24px 28px", gap: 20 }}>
                     <FormField label="Nom du projet / canvas">
                       <input value={projectName} onChange={e => setProjectName(e.target.value)} placeholder="Ex : Analyse prévoyance 2024 — Groupe Alpha" />
-                    </FormField>
-                    <FormField label="Secteur d'activité">
-                      <select value={secteur} onChange={e => setSecteur(e.target.value)}>
-                        <option value="">Sélectionner…</option>
-                        {SECTEURS.map(s => <option key={s}>{s}</option>)}
-                      </select>
                     </FormField>
                     <FormField label="Objectif principal">
                       <textarea value={objectif} onChange={e => setObjectif(e.target.value)} rows={3} placeholder="Décrivez l'objectif principal de cette analyse…" />
@@ -547,12 +541,13 @@ export default function Home() {
                       <textarea value={perimetre} onChange={e => setPerimetre(e.target.value)} rows={3} placeholder="Population concernée, entités, géographie, produits, période…" />
                     </FormField>
                     <div>
-                      <label className="mono-label block mb-1.5">Axes d&apos;analyse attendus</label>
-                      <div className="flex flex-wrap gap-1.5">
+                      <label className="mono-label block mb-2">Axes d&apos;analyse attendus</label>
+                      <div className="flex flex-wrap" style={{ gap: 8 }}>
                         {AXES.map(axe => (
                           <button key={axe} onClick={() => setSelectedAxes(prev => prev.includes(axe) ? prev.filter(a => a !== axe) : [...prev, axe])}
-                            className="px-3.5 py-1.5 rounded-full text-xs transition-all cursor-pointer"
+                            className="rounded-full transition-all cursor-pointer"
                             style={{
+                              padding: "7px 16px", fontSize: 13,
                               border: `1px solid ${selectedAxes.includes(axe) ? "var(--accent)" : "var(--border)"}`,
                               background: selectedAxes.includes(axe) ? "var(--accent-bg)" : "var(--bg-elevated)",
                               color: selectedAxes.includes(axe) ? "var(--accent-text)" : "var(--text-secondary)",
@@ -561,9 +556,9 @@ export default function Home() {
                         ))}
                       </div>
                     </div>
-                    <div className="flex justify-end pt-2">
+                    <div className="flex justify-end" style={{ paddingTop: 8 }}>
                       <button onClick={generateCanvasFromForm} className="inline-flex items-center gap-2"
-                        style={{ background: "var(--color-ink)", color: "var(--color-paper)", border: "none", borderRadius: "var(--radius)", padding: "9px 20px", fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>
+                        style={{ background: "var(--color-ink)", color: "var(--color-paper)", border: "none", borderRadius: "var(--radius)", padding: "10px 24px", fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>
                         <IconBolt className="w-3.5 h-3.5" /> Générer le canvas
                       </button>
                     </div>
@@ -572,14 +567,14 @@ export default function Home() {
 
                 {/* Free text mode */}
                 {asstMode === "free" && (
-                  <div className="p-5">
+                  <div style={{ padding: "24px 28px" }}>
                     <FormField label="Description du projet">
                       <textarea value={freeText} onChange={e => setFreeText(e.target.value)} rows={10} style={{ minHeight: 200 }}
                         placeholder="Décrivez votre projet et vos besoins d'analyse en langage libre. Mentionnez le secteur, les objectifs, le périmètre, les axes d'analyse importants…" />
                     </FormField>
-                    <div className="flex justify-end pt-2">
+                    <div className="flex justify-end" style={{ paddingTop: 16 }}>
                       <button onClick={loadRiskDashboard} className="inline-flex items-center gap-2"
-                        style={{ background: "var(--color-ink)", color: "var(--color-paper)", border: "none", borderRadius: "var(--radius)", padding: "9px 20px", fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>
+                        style={{ background: "var(--color-ink)", color: "var(--color-paper)", border: "none", borderRadius: "var(--radius)", padding: "10px 24px", fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>
                         <IconBolt className="w-3.5 h-3.5" /> Générer le canvas
                       </button>
                     </div>
@@ -590,7 +585,7 @@ export default function Home() {
 
             {/* Assistant generating */}
             {createMode === "assistant" && isAssistantGenerating && (
-              <div className="animate-fade-up text-center py-12" style={{ background: "var(--bg-elevated)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
+              <div className="animate-fade-up text-center py-12" style={{ background: "var(--bg-elevated)", borderRadius: "var(--radius)", border: "1px solid var(--border)", marginTop: 8 }}>
                 <div className="spinner mx-auto mb-5" />
                 <h3 style={{ fontSize: 17, fontWeight: 500, marginBottom: 6 }}>Pilot construit votre canvas</h3>
                 <p style={{ color: "var(--text-secondary)", fontSize: 13 }}>Analyse du besoin et création des sections…</p>
@@ -638,12 +633,12 @@ export default function Home() {
               <div style={{ padding: "16px 20px" }}>
                 <div className="flex flex-wrap mb-3" style={{ gap: 8 }}>
                   {filters.map(f => (
-                    <div key={f.id} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs"
-                      style={{ border: "1px solid var(--border)", background: "var(--bg-elevated)", color: "var(--text-secondary)" }}>
-                      <IconFilter className="w-3 h-3" style={{ opacity: 0.5 }} />
+                    <div key={f.id} className="inline-flex items-center gap-2 rounded-full"
+                      style={{ border: "1px solid var(--border)", background: "var(--bg-elevated)", color: "var(--text-secondary)", padding: "6px 14px", fontSize: 13 }}>
+                      <IconFilter className="w-3.5 h-3.5" style={{ opacity: 0.5 }} />
                       {f.label}
-                      <button onClick={() => removeFilter(f.id)} className="w-3.5 h-3.5 rounded-full flex items-center justify-center text-[10px] cursor-pointer"
-                        style={{ background: "rgba(28,28,26,0.08)", color: "var(--text-tertiary)", border: "none" }}>×</button>
+                      <button onClick={() => removeFilter(f.id)} className="w-4 h-4 rounded-full flex items-center justify-center cursor-pointer"
+                        style={{ background: "rgba(28,28,26,0.08)", color: "var(--text-tertiary)", border: "none", fontSize: 11 }}>×</button>
                     </div>
                   ))}
                 </div>
@@ -804,7 +799,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="mt-5">
+            <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
               <button onClick={() => generateSectionContent(editSection.id)}
                 disabled={generatingSectionId === editSection.id}
                 className="w-full inline-flex items-center justify-center gap-2"
@@ -923,9 +918,9 @@ function FormField({ label, children }: { label: string; children: React.ReactNo
   return (
     <div className="flex flex-col gap-1.5">
       <label className="mono-label">{label}</label>
-      <div className="[&>input]:w-full [&>input]:bg-[var(--bg-base)] [&>input]:border [&>input]:border-[var(--border)] [&>input]:rounded-[var(--radius)] [&>input]:px-3 [&>input]:py-2 [&>input]:font-[family-name:var(--font-sans)] [&>input]:text-[13px] [&>input]:text-[var(--text-primary)] [&>input]:outline-none
-        [&>textarea]:w-full [&>textarea]:bg-[var(--bg-base)] [&>textarea]:border [&>textarea]:border-[var(--border)] [&>textarea]:rounded-[var(--radius)] [&>textarea]:px-3 [&>textarea]:py-2 [&>textarea]:font-[family-name:var(--font-sans)] [&>textarea]:text-[13px] [&>textarea]:text-[var(--text-primary)] [&>textarea]:outline-none [&>textarea]:resize-none [&>textarea]:leading-relaxed
-        [&>select]:w-full [&>select]:bg-[var(--bg-base)] [&>select]:border [&>select]:border-[var(--border)] [&>select]:rounded-[var(--radius)] [&>select]:px-3 [&>select]:py-2 [&>select]:font-[family-name:var(--font-sans)] [&>select]:text-[13px] [&>select]:text-[var(--text-primary)] [&>select]:outline-none [&>select]:cursor-pointer">
+      <div className="[&>input]:w-full [&>input]:bg-[var(--bg-base)] [&>input]:border [&>input]:border-[var(--border)] [&>input]:rounded-[var(--radius)] [&>input]:px-4 [&>input]:py-3 [&>input]:font-[family-name:var(--font-sans)] [&>input]:text-[13px] [&>input]:text-[var(--text-primary)] [&>input]:outline-none
+        [&>textarea]:w-full [&>textarea]:bg-[var(--bg-base)] [&>textarea]:border [&>textarea]:border-[var(--border)] [&>textarea]:rounded-[var(--radius)] [&>textarea]:px-4 [&>textarea]:py-3 [&>textarea]:font-[family-name:var(--font-sans)] [&>textarea]:text-[13px] [&>textarea]:text-[var(--text-primary)] [&>textarea]:outline-none [&>textarea]:resize-none [&>textarea]:leading-relaxed
+        [&>select]:w-full [&>select]:bg-[var(--bg-base)] [&>select]:border [&>select]:border-[var(--border)] [&>select]:rounded-[var(--radius)] [&>select]:px-4 [&>select]:py-3 [&>select]:font-[family-name:var(--font-sans)] [&>select]:text-[13px] [&>select]:text-[var(--text-primary)] [&>select]:outline-none [&>select]:cursor-pointer">
         {children}
       </div>
     </div>
