@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useCallback } from "react";
 
 /* ═══════════════════════════════════════════════════════
    TYPES
@@ -125,7 +125,7 @@ export default function Home() {
 
   /* Upload state */
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+
 
   /* Assistant form state */
   const [projectName, setProjectName] = useState("");
@@ -149,44 +149,9 @@ export default function Home() {
     setSelectedSection(null);
   }, []);
 
-  /* ─── Create: Upload mode ─── */
-  const handleFileUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  /* ─── Create: Upload mode (simulated) ─── */
+  const simulateUpload = useCallback(() => {
     setIsAnalyzing(true);
-
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
-      const res = await fetch("/api/analyze", { method: "POST", body: formData });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.sections) {
-          setCanvasName(data.canvasName || "Canvas importé");
-          setCanvasOrigin("CRÉÉ DEPUIS UN MODÈLE");
-          setSections(data.sections.map((s: { id?: string; title: string; description: string; type?: string }, i: number) => ({
-            id: i,
-            label: s.title,
-            description: s.description,
-            render: (s.type?.includes("chart") || s.type?.includes("heatmap") || s.type?.includes("pie")) ? "chart" as const : s.type === "kpi-grid" ? "both" as const : "text" as const,
-            fullWidth: i === 0 || s.type === "table" || s.type === "heatmap",
-            iconType: s.type?.includes("chart") ? "chart" : s.type === "table" ? "table" : s.type === "kpi-grid" ? "kpi" : "text",
-          })));
-          setFilters([
-            { id: "risk", label: "Risque N1", placeholder: "Ex : Gouvernance, Opérationnel" },
-            { id: "period", label: "Exercice", placeholder: "Ex : 2025" },
-            { id: "scope", label: "Périmètre", placeholder: "Ex : Groupe, Direction" },
-          ]);
-          setIsAnalyzing(false);
-          navToView("canvas");
-          return;
-        }
-      }
-    } catch {
-      // Fallback to pre-built canvas
-    }
-
-    // Fallback — use pre-built slide analysis
     setTimeout(() => {
       setCanvasName("Risque Gouvernance — SAB Santé");
       setCanvasOrigin("CRÉÉ DEPUIS UN MODÈLE");
@@ -198,7 +163,7 @@ export default function Home() {
       ]);
       setIsAnalyzing(false);
       navToView("canvas");
-    }, 2500);
+    }, 3000);
   }, [navToView]);
 
   /* ─── Create: Manual ─── */
@@ -435,29 +400,44 @@ export default function Home() {
 
             {/* ─── MODE: Upload ─── */}
             {createMode === "upload" && !isAnalyzing && (
-              <div className="animate-fade-up">
-                <div style={{ background: "var(--bg-elevated)", border: "2px dashed var(--color-rule)", borderRadius: "var(--radius)", padding: "48px 40px", textAlign: "center", cursor: "pointer", position: "relative" }}
-                  onClick={() => fileInputRef.current?.click()}>
-                  <IconUpload className="w-9 h-9 mx-auto mb-3" style={{ color: "var(--text-tertiary)" }} />
-                  <h3 style={{ fontSize: 16, fontWeight: 500, marginBottom: 4 }}>Glissez votre modèle ici</h3>
-                  <p style={{ color: "var(--text-secondary)", fontSize: 13 }}>PDF, PNG, JPG, PPTX — Pilot analyse la structure et crée le canvas</p>
-                  <div className="flex gap-2 justify-center mt-3">
-                    {["PDF", "PNG", "PPTX", "JPG"].map(f => (
-                      <span key={f} className="mono-label" style={{ padding: "3px 10px", borderRadius: 9999, background: "var(--bg-surface)" }}>{f}</span>
-                    ))}
-                  </div>
-                  <input ref={fileInputRef} type="file" accept=".pdf,.png,.jpg,.jpeg,.pptx" onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                </div>
-                <p style={{ fontSize: 11, color: "var(--text-tertiary)", textAlign: "center", marginTop: 10 }}>
-                  Pilot utilise Claude Vision pour analyser la structure visuelle de votre document.
+              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: 32, boxShadow: "var(--shadow-sm)" }}>
+                <div className="mono-label mb-3" style={{ color: "var(--accent-text)" }}>Modèle disponible</div>
+                <p style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 16, maxWidth: 600 }}>
+                  Cliquez sur la slide ci-dessous pour l&apos;importer. Pilot analysera sa structure visuelle et créera automatiquement un canvas avec les sections détectées.
                 </p>
+                {/* Fake slide preview */}
+                <div
+                  onClick={simulateUpload}
+                  style={{ cursor: "pointer", borderRadius: "var(--radius)", overflow: "hidden", border: "1px solid var(--border)", boxShadow: "var(--shadow-md)", transition: "box-shadow 0.2s, transform 0.2s", maxWidth: 820, marginInline: "auto" }}
+                  onMouseEnter={e => { e.currentTarget.style.boxShadow = "var(--shadow-lg)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.boxShadow = "var(--shadow-md)"; e.currentTarget.style.transform = "translateY(0)"; }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/template-sab-gouvernance.svg" alt="Slide SAB Santé — Risque Gouvernance" style={{ width: "100%", display: "block" }} />
+                </div>
+                <div className="text-center mt-4">
+                  <button onClick={simulateUpload} className="inline-flex items-center gap-2"
+                    style={{ background: "var(--color-ink)", color: "var(--color-paper)", border: "none", borderRadius: "var(--radius)", padding: "10px 24px", fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>
+                    <IconUpload className="w-4 h-4" /> Importer cette slide
+                  </button>
+                  <p style={{ fontSize: 11, color: "var(--text-tertiary)", marginTop: 8 }}>
+                    SAB Santé — Risque N1 Gouvernance — Direction des Risques — Juin 2025
+                  </p>
+                </div>
               </div>
             )}
             {createMode === "upload" && isAnalyzing && (
-              <div className="animate-fade-up text-center py-12" style={{ background: "var(--bg-elevated)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
-                <div className="spinner mx-auto mb-5" />
-                <h3 style={{ fontSize: 17, fontWeight: 500, marginBottom: 6 }}>Pilot analyse votre document</h3>
-                <p style={{ color: "var(--text-secondary)", fontSize: 13 }}>Détection de la structure, des sections et des KPIs…</p>
+              <div className="animate-fade-up" style={{ background: "var(--bg-elevated)", borderRadius: "var(--radius)", border: "1px solid var(--border)", overflow: "hidden" }}>
+                {/* Show faded slide behind spinner */}
+                <div style={{ position: "relative" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/template-sab-gouvernance.svg" alt="" style={{ width: "100%", display: "block", opacity: 0.15, maxWidth: 820, marginInline: "auto" }} />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <div className="spinner mb-5" />
+                    <h3 style={{ fontSize: 17, fontWeight: 500, marginBottom: 6 }}>Pilot analyse votre document</h3>
+                    <p style={{ color: "var(--text-secondary)", fontSize: 13 }}>Détection de la structure, des sections et des KPIs…</p>
+                  </div>
+                </div>
               </div>
             )}
 
